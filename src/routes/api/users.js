@@ -10,6 +10,55 @@ const {
 const ctrl = require("../../controllers/users");
 const { schemas } = require("../../models/user");
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       required:
+ *         - email
+ *         - password
+ *       properties:
+ *         email:
+ *           type: string
+ *           description: The user email
+ *         password:
+ *           type: string
+ *           description: The user password
+ *       example:
+ *         email: user@mail.com
+ *         password: test1234
+ */
+
+/**
+ * @swagger
+ * tags:
+ *  name: Users
+ *  description: The users managing API
+ */
+
+/**
+ * @swagger
+ * /api/users/register:
+ *   post:
+ *    summary: Returns verificationToken
+ *    tags: [Users]
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/src/models/User'
+ *    responses:
+ *      200:
+ *        description: The verificationToken
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: string
+ */
+
 router.post(
   "/register",
   validateBody(schemas.registerSchema),

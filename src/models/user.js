@@ -2,26 +2,18 @@ const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 const { handleMongooseSchemaError } = require("../helpers");
 
-const subscriptions = ["starter", "pro", "business"];
-
 const userSchema = new Schema(
   {
     email: {
       type: String,
       required: [true, "Email is required"],
       unique: true,
-      min: 6,
-      max: 30,
+      minLength: 6,
+      maxLength: 30,
     },
     password: {
       type: String,
-      minLength: 8,
-      // required: [true, "Password is required"],
-    },
-    subscription: {
-      type: String,
-      enum: subscriptions,
-      default: "starter",
+      required: [true, "Password is required"],
     },
     avatarURL: {
       type: String,
@@ -54,12 +46,6 @@ const loginSchema = Joi.object({
   password: Joi.string().required(),
 });
 
-const updateSubscriptionSchema = Joi.object({
-  subscription: Joi.string()
-    .valid(...subscriptions)
-    .required(),
-});
-
 const reVerify = Joi.object({
   email: Joi.string().required(),
 });
@@ -67,7 +53,6 @@ const reVerify = Joi.object({
 const schemas = {
   registerSchema,
   loginSchema,
-  updateSubscriptionSchema,
   reVerify,
 };
 
