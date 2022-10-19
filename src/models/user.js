@@ -33,7 +33,7 @@ const userSchema = new Schema(
     },
     verificationToken: {
       type: String,
-      required: [true, 'Verify token is required'],
+      required: [true, "Verify token is required"],
     },
   },
   { timestamps: true }
@@ -42,14 +42,14 @@ const userSchema = new Schema(
 userSchema.post("save", handleMongooseSchemaError);
 
 const registerSchema = Joi.object({
-  username: Joi.string().required(),
-  email: Joi.string().required(),
-  password: Joi.string().required(),
+  username: Joi.string().required().max(10),
+  email: Joi.string().required().min(6).max(30),
+  password: Joi.string().required().min(8).max(100),
 });
 
 const loginSchema = Joi.object({
-  email: Joi.string().required(),
-  password: Joi.string().required(),
+  email: Joi.string().required().min(6).max(30),
+  password: Joi.string().required().min(8).max(100),
 });
 
 const reVerify = Joi.object({

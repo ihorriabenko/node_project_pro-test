@@ -12,7 +12,7 @@ const register = async (req, res) => {
   const isEmail = await User.findOne({ email });
 
   if (isEmail) {
-    throw RequestError(409, "Email in use");
+    throw RequestError(409, "Provided email already exists");
   }
 
   const hashPassword = await bcryptjs.hash(password, 10);
@@ -39,10 +39,7 @@ const register = async (req, res) => {
   // await verifyMessage(msg);
 
   res.status(201).json({
-    username: newUser.username,
-    email: newUser.email,
-    subscription: newUser.subscription,
-    verificationToken: newUser.verificationToken,
+    status: "success",
   });
 };
 
