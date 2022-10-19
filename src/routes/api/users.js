@@ -17,9 +17,16 @@ const { schemas } = require("../../models/user");
  *     User:
  *       type: object
  *       required:
+ *         - username
  *         - email
  *         - password
  *       properties:
+ *         _id:
+ *           type: string
+ *           description: The auto-generated id of the user
+ *         username:
+ *           type: string
+ *           description: The user name
  *         email:
  *           type: string
  *           description: The user email
@@ -27,36 +34,71 @@ const { schemas } = require("../../models/user");
  *           type: string
  *           description: The user password
  *       example:
- *         email: user@mail.com
- *         password: test1234
+ *         _id: ObjectId('371ebd9b2c2a1032d700441f')
+ *         username: User
+ *         email: user@gmail.com
+ *         password: user1234
  */
 
 /**
  * @swagger
  * tags:
- *  name: Users
- *  description: The users managing API
+ *   name: Users
+ *   description: The users managing API
  */
 
 /**
  * @swagger
  * /api/users/register:
  *   post:
- *    summary: Returns verificationToken
- *    tags: [Users]
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            $ref: '#/src/models/User'
- *    responses:
- *      200:
- *        description: The verificationToken
- *        content:
- *          application/json:
- *            schema:
- *              type: string
+ *     summary: Create a user
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       201:
+ *         description: The user was successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       404:
+ *         description: Not found
+ *       409:
+ *         description: Email in use
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * @swagger
+ * /api/users/login:
+ *   post:
+ *     summary: Log in
+ *     description: lorem 200000002
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string  
+ *     responses:
+ *       201:
+ *         description: The user was successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
  */
 
 router.post(
@@ -65,9 +107,13 @@ router.post(
   ctrlWrapper(ctrl.register)
 );
 
-router.get("/verify/:verificationToken", ctrlWrapper(ctrl.getVerify))
+router.get("/verify/:verificationToken", ctrlWrapper(ctrl.getVerify));
 
-router.post("/verify", validateBody(schemas.reVerify), ctrlWrapper(ctrl.reVerify))
+router.post(
+  "/verify",
+  validateBody(schemas.reVerify),
+  ctrlWrapper(ctrl.reVerify)
+);
 
 router.post(
   "/login",
