@@ -7,7 +7,7 @@ const {verifyMessage} = require("../../helpers")
 const { BASE_URL } = process.env;
 
 const register = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, email, password } = req.body;
 
   const isEmail = await User.findOne({ email });
 
@@ -22,6 +22,7 @@ const register = async (req, res) => {
   const verificationToken = uuidv4();
 
   const newUser = await User.create({
+    username,
     email,
     password: hashPassword,
     avatarURL,
@@ -31,14 +32,14 @@ const register = async (req, res) => {
   const msg = {
     to: email,
     from: "riabenko.igor@gmail.com",
-    subject: "verify",
-    text: "lorem2000",
-    html: `<a href="${BASE_URL}/api/users/verify/${verificationToken}" target="_blank">Нажмите для подтверждения регистрации</a>`,
+    subject: "Please verify your email address",
+    html: `<p>ProTest needs to confirm your email address is valid. Please click the link below to confirm you received this mail.</p><a href="${BASE_URL}/api/users/verify/${verificationToken}" target="_blank">Verify Email</a>`,
   };
 
   await verifyMessage(msg);
 
   res.status(201).json({
+    username: newUser.username,
     email: newUser.email,
     subscription: newUser.subscription,
     verificationToken: newUser.verificationToken,
