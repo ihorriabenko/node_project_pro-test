@@ -18,8 +18,8 @@
       "description": "User endpoints"
     },
     {
-      "name": "Question",
-      "description": "Question endpoints"
+      "name": "Test",
+      "description": "Test endpoints"
     }
   ],
   "paths": {
@@ -56,6 +56,10 @@
           },
           "409": {
             "description": "Provided email already exists",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
             "content": {}
           }
         }
@@ -95,6 +99,10 @@
           "401": {
             "description": "Email or password is wrong",
             "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
           }
         }
       }
@@ -112,13 +120,17 @@
           "401": {
             "description": "Not authorized",
             "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
           }
         }
       }
     },
-    "/api/questions/{type}": {
+    "/api/tests/qa/{type}": {
       "get": {
-        "tags": ["Question"],
+        "tags": ["Test"],
         "summary": "Get 12 random questions",
         "security": [{ "Bearer": [] }],
         "parameters": [
@@ -142,7 +154,58 @@
             }
           },
           "401": {
-            "description": "Not authorized"
+            "description": "Not authorized",
+            "content": {}
+          },
+          "404": {
+            "description": "Not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/tests/results": {
+      "get": {
+        "tags": ["Test"],
+        "summary": "Get results of the test",
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Authentication's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/resultsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/resultsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
           }
         }
       }
@@ -247,6 +310,31 @@
               "This is testing with different inputs and validation of the results.",
               "I don't know"
             ]
+          }
+        }
+      },
+      "resultsRequest": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "634e71e6b739faa5926ec27a"
+            },
+            "answer": {
+              "type": "string",
+              "example": "All options are correct"
+            }
+          }
+        }
+      },
+      "resultsResponse": {
+        "type": "object",
+        "properties": {
+          "rightAnswers": {
+            "type": "string",
+            "example": "7"
           }
         }
       }

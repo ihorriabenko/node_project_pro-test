@@ -1,7 +1,7 @@
-const questions = require("./questions");
+const tests = require("./tests");
 const users = require("./users");
 
 module.exports = {
-  questions,
+  tests,
   users,
 };

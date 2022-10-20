@@ -7,24 +7,6 @@ const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerDocument = require('./swagger.json');
 
-
-// const options = {
-//   definition: {
-//     openapi: "3.0.0",
-//     info: {
-//       title: "Library API",
-//       version: "1.0.0",
-//       description: "A simple Express Library API",
-//     },
-//     servers: [
-//       {
-//         url: "https://node-project-pro-test.herokuapp.com",
-//       },
-//     ],
-//   },
-//   apis: ["./src/routes/api/*.js"],
-// };
-// const specs = swaggerJsDoc(options);
 const app = express();
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
@@ -34,7 +16,7 @@ app.use(express.json());
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use("/api/users", routes.users);
-app.use("/api/questions", routes.questions);
+app.use("/api/tests", routes.tests);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });

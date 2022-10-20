@@ -1,6 +1,7 @@
 const { Schema, model } = require("mongoose");
+const Joi = require("joi");
 
-const questionSchema = new Schema({
+const testSchema = new Schema({
   type: {
     type: String,
     required: [true, "Type is required"],
@@ -19,8 +20,20 @@ const questionSchema = new Schema({
   },
 });
 
-const Question = model("question", questionSchema);
+const Test = model("test", testSchema);
+
+const resultsSchema = Joi.array().items(
+  Joi.object({
+    _id: Joi.string().required().min(24).max(24),
+    answer: Joi.string().required(),
+  })
+);
+
+const schemas = {
+  resultsSchema,
+};
 
 module.exports = {
-  Question,
+  Test,
+  schemas,
 };
