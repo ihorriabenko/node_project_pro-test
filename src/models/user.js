@@ -20,9 +20,6 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required"],
     },
-    avatarURL: {
-      type: String,
-    },
     token: {
       type: String,
       default: null,

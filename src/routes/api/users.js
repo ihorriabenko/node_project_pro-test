@@ -34,20 +34,6 @@ router.get("/current", authenticate, ctrlWrapper(ctrl.getCurrent));
 
 router.get("/logout", authenticate, ctrlWrapper(ctrl.logout));
 
-router.patch(
-  "/subscription",
-  authenticate,
-  validateBody(schemas.updateSubscriptionSchema),
-  ctrlWrapper(ctrl.updateSubscription)
-);
-
-router.patch(
-  "/avatars",
-  uploadMiddleware.single("avatar"),
-  authenticate,
-  ctrlWrapper(ctrl.updateAvatar)
-);
-
 router.get(
   "/google",
   authenticateSocial.authenticate("google", { scope: ["email", "profile"] })

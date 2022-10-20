@@ -1,7 +1,6 @@
 const bcryptjs = require("bcryptjs");
 const { User } = require("../../models/user");
 const { RequestError } = require("../../helpers");
-const gravatar = require("gravatar");
 const { v4: uuidv4 } = require("uuid");
 const { verifyMessage } = require("../../helpers");
 const { BASE_URL } = process.env;
@@ -17,15 +16,16 @@ const register = async (req, res) => {
 
   const hashPassword = await bcryptjs.hash(password, 10);
 
-  const avatarURL = gravatar.url(email);
-
   const verificationToken = uuidv4();
 
+  const splitedLowerCaseName = username.toLowerCase().split('');
+  splitedLowerCaseName[0] = splitedLowerCaseName[0].toUpperCase();
+  const normalizedName = splitedLowerCaseName.join('');
+
   const newUser = await User.create({
-    username,
+    username: normalizedName,
     email,
     password: hashPassword,
-    avatarURL,
     verificationToken,
   });
 
