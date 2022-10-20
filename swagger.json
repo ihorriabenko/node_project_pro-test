@@ -129,7 +129,7 @@
       }
     },
     "/api/users/current": {
-      "post": {
+      "get": {
         "tags": ["User"],
         "summary": "Get current user",
         "security": [{ "Bearer": [] }],
