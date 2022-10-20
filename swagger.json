@@ -308,6 +308,11 @@
             "type": "object",
             "description": "User's data",
             "properties": {
+              "_id": {
+                "type": "string",
+                "description": "User's id",
+                "example": "7314fcebefc926aeb3732bec"
+              },
               "username": {
                 "type": "string",
                 "description": "User's name",
