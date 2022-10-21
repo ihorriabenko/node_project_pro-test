@@ -6,19 +6,19 @@ const userSchema = new Schema(
   {
     username: {
       type: String,
-      // required: [true, "Username is required"],
+      required: [true, "Username is required"],
       maxLength: 10,
     },
     email: {
       type: String,
-      // required: [true, "Email is required"],
+      required: [true, "Email is required"],
       unique: true,
       minLength: 6,
       maxLength: 30,
     },
     password: {
       type: String,
-      // required: [true, "Password is required"],
+      required: [true, "Password is required"],
     },
     token: {
       type: String,
@@ -30,7 +30,7 @@ const userSchema = new Schema(
     },
     verificationToken: {
       type: String,
-      // required: [true, "Verify token is required"],
+      required: [true, "Verify token is required"],
     },
   },
   { timestamps: true }

@@ -10,12 +10,13 @@ const googleUser = async (req, res) => {
   };
 
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
+
   const user = await User.findByIdAndUpdate(_id, { token });
 
   res.json({
     token,
     user: {
-      email: user.email,
+      username: user.username
     },
   });
 };
