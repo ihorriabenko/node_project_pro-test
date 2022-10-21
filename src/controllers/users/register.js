@@ -18,12 +18,8 @@ const register = async (req, res) => {
 
   const verificationToken = uuidv4();
 
-  const splitedLowerCaseName = username.toLowerCase().split('');
-  splitedLowerCaseName[0] = splitedLowerCaseName[0].toUpperCase();
-  const normalizedName = splitedLowerCaseName.join('');
-
   const newUser = await User.create({
-    username: normalizedName,
+    username,
     email,
     password: hashPassword,
     verificationToken,
