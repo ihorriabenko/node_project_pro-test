@@ -16,7 +16,8 @@ const googleUser = async (req, res) => {
   res.json({
     token,
     user: {
-      username: user.username
+      _id: user._id,
+      username: user.username,
     },
   });
 };

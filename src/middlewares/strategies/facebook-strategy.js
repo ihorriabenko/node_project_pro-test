@@ -1,9 +1,13 @@
-const { Strategy } = require("passport-google-oauth2");
-
+const {
+  FACEBOOK_CLIENT_ID,
+  FACEBOOK_CLIENT_SECRET,
+  FACEBOOK_CALLBACK_URL,
+  APP_URL,
+} = process.env;
+const { Strategy } = require("passport-facebook");
 const { User } = require("../../models/user");
-
-const { FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET, FACEBOOK_CALLBACK_URL, APP_URL } =
-  process.env;
+const { v4: uuidv4 } = require("uuid");
+const bcryptjs = require("bcryptjs");
 
 const callbackURL = `${APP_URL}${FACEBOOK_CALLBACK_URL}`;
 const facebookParams = {
@@ -11,6 +15,7 @@ const facebookParams = {
   clientSecret: FACEBOOK_CLIENT_SECRET,
   callbackURL,
   passReqToCallback: true,
+  profileFields: ['displayName', 'email']
 };
 
 const facebookCallback = async (
@@ -22,12 +27,28 @@ const facebookCallback = async (
 ) => {
   try {
     console.log(profile);
-    const { email } = profile;
+    const { displayName, verified, provider } = profile;
+    const [value] = profile.emails;
+    const {value: email} = value;
+
     const user = await User.findOne({ email });
+
     if (user) {
+      // req.user = user === return done(null, user) \\
       return done(null, user);
     }
-    const newUser = await User.create({ email });
+
+    const password = uuidv4();
+    const hashPassword = await bcryptjs.hash(password, 10);
+
+    const newUser = await User.create({
+      username: "asd",
+      email,
+      password: hashPassword,
+      verify: verified,
+      verificationToken: provider,
+    });
+
     done(null, newUser);
   } catch (error) {
     done(error, false);
