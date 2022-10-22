@@ -5,7 +5,7 @@ const ctrl = require("../../controllers/tests");
 const { schemas } = require("../../models/test");
 const { validateBody, authenticate } = require("../../middlewares");
 
-router.get("/qa/:type", authenticate, ctrlWrapper(ctrl.getQuestions));
+router.get("/qa/:type", ctrlWrapper(ctrl.getQuestions));
 router.get(
   "/results",
   validateBody(schemas.resultsSchema),
