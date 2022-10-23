@@ -3,20 +3,34 @@ const { Test } = require("../../models/test");
 const getResults = async (req, res) => {
   const { value } = req.body;
 
-  // const rightAnswersCounter = await value.reduce(async (acc, el) => {
-  //   const dbQuestion = await Test.findOne({ _id: el._id });
+  const rightAnswersCounter = await value.reduce(async (acc, el) => {
+    const dbQuestion = await Test.findOne({ _id: el._id });
 
-  //   if (dbQuestion && dbQuestion.rightAnswer === el.answer) {
-  //     acc += 1;
-  //   }
+    if (dbQuestion && dbQuestion.rightAnswer === el.answer) {
+      acc += 1;
+    }
 
-  //   return acc;
-  // }, 0);
+    return acc;
+  }, 0);
 
-  const questions = await Test.find();
+  // const questions = await Test.find();
+  // let acc = 0;
+  // for (const question of questions) {
+  //   userAnswers.forEach((userAnswer) => {
+  //     console.log(`${question._id}` === `new ObjectId("${userAnswer._id}")`);
+  //     if (question._id === `new ObjectId("${userAnswer._id}")`) {
+  //       if (question.rightAnswer === userAnswer.answer) {
+  //         acc += 1;
+  //       }
+  //     }
+  //   });
+    // if (acc === 12) {
+    //   break;
+    // }
+  // }
 
   res.json({
-    rightAnswers: 7,
+    rightAnswers: rightAnswersCounter,
   });
 };
 
