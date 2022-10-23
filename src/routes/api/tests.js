@@ -6,7 +6,7 @@ const { schemas } = require("../../models/test");
 const { validateBody, authenticate } = require("../../middlewares");
 
 router.get("/qa/:type", ctrlWrapper(ctrl.getQuestions));
-router.get(
+router.post(
   "/results",
   validateBody(schemas.resultsSchema),
   authenticate,

@@ -273,7 +273,7 @@
       }
     },
     "/api/tests/results": {
-      "get": {
+      "post": {
         "tags": ["Test"],
         "summary": "Get results of the test",
         "security": [{ "Bearer": [] }],
@@ -443,17 +443,22 @@
         }
       },
       "resultsRequest": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "_id": {
-              "type": "string",
-              "example": "634e71e6b739faa5926ec27a"
-            },
-            "answer": {
-              "type": "string",
-              "example": "All options are correct"
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "properties": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "example": "634e71e6b739faa5926ec27a"
+                },
+                "answer": {
+                  "type": "string",
+                  "example": "All options are correct"
+                }
+              }
             }
           }
         }
