@@ -12,7 +12,7 @@ const googleParams = {
   callbackURL,
   passReqToCallback: true,
 };
-// retest
+
 const googleCallback = async (
   req,
   accessToken,

@@ -48,7 +48,7 @@ router.get(
 router.get(
   "/facebook",
   authenticateSocial.authenticate("facebook", {
-    successRedirect: proccess.env.CLIENT_URL,
+    successRedirect: process.env.CLIENT_URL,
     scope: ["email", "public_profile"],
   })
 );
