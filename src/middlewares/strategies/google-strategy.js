@@ -6,6 +6,7 @@ const { v4: uuidv4 } = require("uuid");
 const bcryptjs = require("bcryptjs");
 
 const callbackURL = `${APP_URL}${GOOGLE_CALLBACK_URL}`;
+
 const googleParams = {
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
