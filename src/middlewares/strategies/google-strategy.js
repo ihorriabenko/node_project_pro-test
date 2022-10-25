@@ -1,11 +1,11 @@
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CALLBACK_URL, BASE_URL } =
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CALLBACK_URL, APP_URL } =
   process.env;
 const { Strategy } = require("passport-google-oauth2");
 const { User } = require("../../models/user");
 const { v4: uuidv4 } = require("uuid");
 const bcryptjs = require("bcryptjs");
 
-const callbackURL = `${BASE_URL}${GOOGLE_CALLBACK_URL}`;
+const callbackURL = `${APP_URL}${GOOGLE_CALLBACK_URL}`;
 const googleParams = {
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
