@@ -3,6 +3,9 @@ const { Test } = require("../../models/test");
 const getResults = async (req, res) => {
   const { value: userAnswers } = req.body;
 
+  // const questions = Test.find({});
+  // TODO
+
   let rightAnswersCounter = 0;
   for (let el of userAnswers) {
     const dbQuestion = await Test.findOne({ _id: el._id });
