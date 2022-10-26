@@ -21,7 +21,7 @@ const testSchema = new Schema({
   },
 });
 
-testSchema.post("save", handleMongooseSchemaError);
+// testSchema.post("save", handleMongooseSchemaError);
 
 const Test = model("test", testSchema);
 
