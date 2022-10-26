@@ -13,7 +13,7 @@ const testSchema = new Schema({
     unique: true,
   },
   answers: {
-    type: [String],
+    type: Array,
     required: [true, "Answers is required"],
   },
   rightAnswer: {
