@@ -9,7 +9,7 @@ const getQuestions = async (req, res) => {
     .sort(() => 0.5 - Math.random())
     .slice(0, 12);
 
-  res.json({shuffledQuestions});
+  res.json(shuffledQuestions);
 };
 
 module.exports = getQuestions;

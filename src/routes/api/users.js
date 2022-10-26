@@ -58,10 +58,10 @@ router.get(
   ctrlWrapper(ctrl.facebookUser)
 );
 
-router.post(
-  "/reset/:type",
-  validateBody(schemas.reVerify),
-  ctrlWrapper(ctrl.resetData)
-);
+// router.post(
+//   "/reset/:type",
+//   validateBody(schemas.reVerify),
+//   ctrlWrapper(ctrl.resetData)
+// );
 
 module.exports = router;
