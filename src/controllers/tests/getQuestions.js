@@ -3,13 +3,17 @@ const { Test } = require("../../models/test");
 const getQuestions = async (req, res) => {
   const { type } = req.params;
 
-  const questions = await Test.find({ type }, "-rightAnswer");
+  // const questions = await Test.find({ type }, "-rightAnswer");
 
-  const shuffledQuestions = [...questions]
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 12);
+  // const shuffledQuestions = [...questions]
+  //   .sort(() => 0.5 - Math.random())
+  //   .slice(0, 12);
 
-  res.json(shuffledQuestions);
+  // res.json(shuffledQuestions);
+
+  res.json({
+    status: "success"
+  })
 };
 
 module.exports = getQuestions;
