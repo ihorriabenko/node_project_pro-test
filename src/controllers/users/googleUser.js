@@ -11,16 +11,9 @@ const googleUser = async (req, res) => {
 
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
 
-  const user = await User.findByIdAndUpdate(_id, { token });
+  await User.findByIdAndUpdate(_id, { token });
 
-  // res.json({
-  //   token,
-  //   user: {
-  //     _id: user._id,
-  //     username: user.username,
-  //   },
-  // });
-  res.redirect(`https://pro-test-git-dev-dennlaz.vercel.app/authSocial/${token}`);
+  res.redirect(`${process.env.CLIENT_URL}/authSocial/${token}`);
 };
 
 module.exports = googleUser;

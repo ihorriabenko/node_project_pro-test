@@ -10,6 +10,7 @@ const { v4: uuidv4 } = require("uuid");
 const bcryptjs = require("bcryptjs");
 
 const callbackURL = `${APP_URL}${FACEBOOK_CALLBACK_URL}`;
+
 const facebookParams = {
   clientID: FACEBOOK_CLIENT_ID,
   clientSecret: FACEBOOK_CLIENT_SECRET,
@@ -26,7 +27,6 @@ const facebookCallback = async (
   done
 ) => {
   try {
-    console.log(profile);
     const { displayName, verified, provider } = profile;
     const [value] = profile.emails;
     const {value: email} = value;

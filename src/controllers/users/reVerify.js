@@ -19,11 +19,10 @@ const reVerify = async (req, res) => {
   }
 
   const msg = {
-    to: "riabenko.igor@gmail.com",
+    to: email,
     from: "riabenko.igor@gmail.com",
-    subject: "verify",
-    text: "lorem2000",
-    html: `<a href="${BASE_URL}/api/users/verify/${isUser.verificationToken}" target="_blank">Нажмите для подтверждения регистрации</a>`,
+    subject: "Please verify your email address",
+    html: `<p>ProTest needs to confirm your email address is valid. Please click the link below to confirm you received this mail.</p><a href="${BASE_URL}/api/users/verify/${verificationToken}" target="_blank">Verify Email</a>`,
   };
 
   await verifyMessage(msg);

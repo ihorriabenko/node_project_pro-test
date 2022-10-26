@@ -1,5 +1,6 @@
 const { User } = require("../../models/user");
 const { RequestError } = require("../../helpers");
+const jwt = require("jsonwebtoken");
 
 const getVerify = async (req, res) => {
   const { verificationToken } = req.params;
@@ -9,11 +10,15 @@ const getVerify = async (req, res) => {
     throw RequestError(404, "Not Found");
   }
 
-  await User.findByIdAndUpdate(isVerifyUser._id, {verify: true, verificationToken: ""});
+  const token = jwt.sign({id: isVerifyUser._id}, process.env.SECRET_KEY, { expiresIn: "2h" });
 
-  res.json({
-    message: "Verification successful",
+  await User.findByIdAndUpdate(isVerifyUser._id, {
+    token,
+    verify: true,
+    verificationToken: "",
   });
+
+  res.redirect(`${process.env.CLIENT_URL}/authSocial/${token}`);
 };
 
 module.exports = getVerify;

@@ -13,9 +13,9 @@ const login = async (req, res) => {
     throw RequestError(401, "Email or password is wrong");
   }
 
-  // if (!user.verify) {
-  //   throw RequestError(401, "Email is not verify, please check your email");
-  // }
+  if (!user.verify) {
+    throw RequestError(401, "Email is not verify, please check your email");
+  }
 
   const passwordCompare = await bcryptjs.compare(password, user.password);
 
@@ -27,7 +27,7 @@ const login = async (req, res) => {
     id: user._id,
   };
 
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "10h" });
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "2h" });
   await User.findByIdAndUpdate(user._id, { token });
 
   res.json({
