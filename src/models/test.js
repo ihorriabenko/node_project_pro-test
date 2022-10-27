@@ -1,6 +1,5 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
-const { handleMongooseSchemaError } = require("../helpers");
 
 const testSchema = new Schema({
   type: {
@@ -20,8 +19,6 @@ const testSchema = new Schema({
     type: String,
   },
 });
-
-// testSchema.post("save", handleMongooseSchemaError);
 
 const Test = model("test", testSchema);
 
