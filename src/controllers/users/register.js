@@ -3,7 +3,7 @@ const { User } = require("../../models/user");
 const { RequestError } = require("../../helpers");
 const { v4: uuidv4 } = require("uuid");
 const { verifyMessage } = require("../../helpers");
-const { CLIENT_URL } = process.env;
+const { BASE_URL } = process.env;
 
 const register = async (req, res) => {
   const { username, email, password } = req.body;
@@ -30,7 +30,7 @@ const register = async (req, res) => {
     to: email,
     from: "riabenko.igor@gmail.com",
     subject: "Please verify your email address",
-    html: `<p>ProTest needs to confirm your email address is valid. Please click the link below to confirm you received this mail.</p><a href="${CLIENT_URL}/api/users/verify/${verificationToken}" target="_blank">Verify Email</a>`,
+    html: `<p>ProTest needs to confirm your email address is valid. Please click the link below to confirm you received this mail.</p><a href="${BASE_URL}/api/users/verify/${verificationToken}" target="_blank">Verify Email</a>`,
   };
 
   await verifyMessage(msg);

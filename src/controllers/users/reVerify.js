@@ -1,7 +1,7 @@
 const { User } = require("../../models/user");
 const { RequestError } = require("../../helpers");
 const { verifyMessage } = require("../../helpers");
-const { CLIENT_URL } = process.env;
+const { BASE_URL } = process.env;
 
 const reVerify = async (req, res) => {
   const { email } = req.body;
@@ -22,7 +22,7 @@ const reVerify = async (req, res) => {
     to: email,
     from: "riabenko.igor@gmail.com",
     subject: "Please verify your email address",
-    html: `<p>ProTest needs to confirm your email address is valid. Please click the link below to confirm you received this mail.</p><a href="${CLIENT_URL}/api/users/verify/${isUser.verificationToken}" target="_blank">Verify Email</a>`,
+    html: `<p>ProTest needs to confirm your email address is valid. Please click the link below to confirm you received this mail.</p><a href="${BASE_URL}/api/users/verify/${isUser.verificationToken}" target="_blank">Verify Email</a>`,
   };
 
   await verifyMessage(msg);
