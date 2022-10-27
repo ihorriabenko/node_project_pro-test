@@ -5,11 +5,11 @@ const ctrl = require("../../controllers/tests");
 const { schemas } = require("../../models/test");
 const { validateBody, authenticate } = require("../../middlewares");
 
-router.get("/qa/:type", ctrlWrapper(ctrl.getQuestions));
+router.get("/qa/:type", authenticate, ctrlWrapper(ctrl.getQuestions));
 router.post(
   "/results",
-  validateBody(schemas.resultsSchema),
   authenticate,
+  validateBody(schemas.resultsSchema),
   ctrlWrapper(ctrl.getResults)
 );
 

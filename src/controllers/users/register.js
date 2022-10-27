@@ -17,7 +17,6 @@ const register = async (req, res) => {
   const hashPassword = await bcryptjs.hash(password, 10);
 
   const verificationToken = uuidv4();
-  console.log(verificationToken);
 
   const newUser = await User.create({
     username,

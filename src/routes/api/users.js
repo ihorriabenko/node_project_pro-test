@@ -64,4 +64,9 @@ router.post(
   ctrlWrapper(ctrl.resetData)
 );
 
+router.get(
+  "/:_id",
+  ctrlWrapper(ctrl.getResults)
+);
+
 module.exports = router;

@@ -7,6 +7,7 @@ const facebookUser = require("./facebookUser");
 const getVerify = require("./getVerify");
 const reVerify = require("./reVerify");
 const resetData = require("./resetData");
+const getResults = require("./getResults");
 
 module.exports = {
   register,
@@ -18,4 +19,5 @@ module.exports = {
   getVerify,
   reVerify,
   resetData,
+  getResults,
 };
