@@ -1,9 +1,11 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
+const { handleMongooseSchemaError } = require("../helpers");
 
 const testSchema = new Schema({
   type: {
     type: String,
+    enum: ['tech', 'theory'],
     required: [true, "Type is required"],
   },
   question: {
@@ -12,13 +14,15 @@ const testSchema = new Schema({
     unique: true,
   },
   answers: {
-    type: Array,
+    type: [String],
     required: [true, "Answers is required"],
   },
   rightAnswer: {
     type: String,
   },
 });
+
+testSchema.post("save", handleMongooseSchemaError);
 
 const Test = model("test", testSchema);
 
