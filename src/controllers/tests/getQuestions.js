@@ -1,8 +1,13 @@
 const { Test } = require("../../models/test");
 const { User } = require("../../models/user");
+const { RequestError } = require("../../helpers");
 
 const getQuestions = async (req, res) => {
   const { type } = req.params;
+
+  if (type !== 'tech' && type !== 'theory') {
+    throw RequestError(400, "Bad request")
+  }
 
   const questions = await Test.find({ type }, "-rightAnswer");
 

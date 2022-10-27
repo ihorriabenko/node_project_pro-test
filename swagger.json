@@ -70,31 +70,16 @@
         "tags": ["User"],
         "summary": "Google authenticate",
         "parameters": [],
-        "requestBody": {
-          "description": "Registration's object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
+                  "$ref": "#/components/schemas/GoogleResponse"
                 }
               }
             }
-          },
-          "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
           },
           "500": {
             "description": "Server error",
@@ -184,7 +169,7 @@
       }
     },
     "/api/users/logout": {
-      "post": {
+      "get": {
         "tags": ["User"],
         "summary": "Log out",
         "security": [{ "Bearer": [] }],
@@ -257,12 +242,12 @@
               }
             }
           },
-          "401": {
-            "description": "Not authorized",
+          "400": {
+            "description": "Bad request (invalid request params)",
             "content": {}
           },
-          "404": {
-            "description": "Not found",
+          "401": {
+            "description": "Not authorized",
             "content": {}
           },
           "500": {
@@ -324,8 +309,8 @@
           "username": {
             "type": "string",
             "description": "User's name",
-            "example": "User",
-            "maxLength": 10
+            "example": "user",
+            "maxLength": 15
           },
           "email": {
             "type": "string",
@@ -351,6 +336,29 @@
             "example": "success"
           }
         }
+      },
+      "GoogleRequest": {
+        "required": ["username", "password", "email"],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "User's name",
+            "example": "user",
+            "maxLength": 15
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "minLength": 6,
+            "maxLength": 30
+          }
+        }
+      },
+      "GoogleResponse": {
+        "type": "redirect",
+        "example": "CLIENT_URL/authSocial/token"
       },
       "LoginRequest": {
         "required": ["email", "password"],
@@ -392,7 +400,7 @@
               "username": {
                 "type": "string",
                 "description": "User's name",
-                "example": "User"
+                "example": "user"
               }
             }
           }
@@ -478,6 +486,18 @@
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT"
+      },
+      "oAuthSample": {
+        "type": "oauth2",
+        "description": "This API uses OAuth 2 with the implicit grant flow. [More info](https://api.example.com/docs/auth)",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://api.example.com/oauth2/authorize"
+          },
+          "scopes": {
+            "read_pets": "read your pets"
+          }
+        }
       }
     }
   }
