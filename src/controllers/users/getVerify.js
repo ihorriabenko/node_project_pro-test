@@ -4,15 +4,19 @@ const jwt = require("jsonwebtoken");
 
 const getVerify = async (req, res) => {
   const { verificationToken } = req.params;
-  const isVerifyUser = await User.findOne({ verificationToken });
+  const user = await User.findOne({ verificationToken });
 
-  if (!isVerifyUser) {
+  if (user.verify) {
+    throw RequestError(400, "Verification has already been passed")
+  } 
+
+  if (!user) {
     throw RequestError(404, "Not Found");
   }
 
-  const token = jwt.sign({id: isVerifyUser._id}, process.env.SECRET_KEY, { expiresIn: "2h" });
+  const token = jwt.sign({id: user._id}, process.env.SECRET_KEY, { expiresIn: "2h" });
 
-  await User.findByIdAndUpdate(isVerifyUser._id, {
+  await User.findByIdAndUpdate(user._id, {
     token,
     verify: true,
     verificationToken: "",

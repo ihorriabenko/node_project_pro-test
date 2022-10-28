@@ -9,7 +9,7 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "servers": [{ "url": "https://node-project-pro-test.herokuapp.com/" }],
+  "servers": [{ "url": "https://pro-test.onrender.com/" }],
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "tags": [
@@ -65,21 +65,31 @@
         }
       }
     },
-    "/api/users/google": {
+    "/api/users/verify/{verificationToken}": {
       "get": {
         "tags": ["User"],
-        "summary": "Google authenticate",
-        "parameters": [],
+        "summary": "User verification",
+        "parameters": [
+          {
+            "name": "verificationToken",
+            "in": "path",
+            "description": "43f373a4-c2ae-4892-ae02-f169ddb6e65b",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GoogleResponse"
-                }
-              }
-            }
+            "content": {}
+          },
+          "400": {
+            "description": "Verification has already been passed",
+            "content": {}
+          },
+          "404": {
+            "description": "User not found",
+            "content": {}
           },
           "500": {
             "description": "Server error",
@@ -88,10 +98,10 @@
         }
       }
     },
-    "/api/users/facebook": {
-      "get": {
+    "/api/users/verify": {
+      "post": {
         "tags": ["User"],
-        "summary": "Facebook authenticate",
+        "summary": "User reverification",
         "parameters": [],
         "requestBody": {
           "description": "Registration's object",
@@ -99,7 +109,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+                "$ref": "#/components/schemas/VerifyRequest"
               }
             }
           }
@@ -110,13 +120,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
+                  "$ref": "#/components/schemas/VerifyResponse"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
+            "description": "Verification has already been passed",
+            "content": {}
+          },
+          "404": {
+            "description": "User not found",
             "content": {}
           },
           "500": {
@@ -168,18 +182,31 @@
         }
       }
     },
-    "/api/users/logout": {
+    "/api/users/google": {
       "get": {
         "tags": ["User"],
-        "summary": "Log out",
-        "security": [{ "Bearer": [] }],
+        "summary": "Google authenticate",
         "parameters": [],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK",
+            "content": {}
           },
-          "401": {
-            "description": "Not authorized",
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/users/facebook": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Facebook authenticate",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
             "content": {}
           },
           "500": {
@@ -205,6 +232,27 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/users/logout": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Log out",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": "No Content"
           },
           "401": {
             "description": "Not authorized",
@@ -455,7 +503,7 @@
         "properties": {
           "value": {
             "type": "array",
-            "properties": {
+            "items": {
               "type": "object",
               "properties": {
                 "_id": {
@@ -479,6 +527,28 @@
             "example": "7"
           }
         }
+      },
+      "VerifyRequest": {
+        "required": ["email"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "minLength": 6,
+            "maxLength": 30
+          }
+        }
+      },
+      "VerifyResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Verification email sent"
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -486,18 +556,6 @@
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT"
-      },
-      "oAuthSample": {
-        "type": "oauth2",
-        "description": "This API uses OAuth 2 with the implicit grant flow. [More info](https://api.example.com/docs/auth)",
-        "flows": {
-          "implicit": {
-            "authorizationUrl": "https://api.example.com/oauth2/authorize"
-          },
-          "scopes": {
-            "read_pets": "read your pets"
-          }
-        }
       }
     }
   }
