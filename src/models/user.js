@@ -32,11 +32,19 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Verify token is required"],
     },
+    techCounter: {
+      type: Number,
+      default: 0,
+    },
     techResults: {
       type: Number,
       default: 0,
     },
-    techCounter: {
+    techPoints: {
+      type: Number,
+      default: 0,
+    },
+    theoryCounter: {
       type: Number,
       default: 0,
     },
@@ -44,19 +52,13 @@ const userSchema = new Schema(
       type: Number,
       default: 0,
     },
-    theoryCounter: {
+    theoryPoints: {
       type: Number,
       default: 0,
     }
   },
   { timestamps: true }
 );
-
-// TODO
-// tech 1test = 70%
-// tech 2test = 40%
-// tech 3test = 20%
-// 
 
 userSchema.post("save", handleMongooseSchemaError);
 

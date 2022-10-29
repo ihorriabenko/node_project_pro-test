@@ -65,8 +65,14 @@ router.post(
 );
 
 router.get(
-  "/:_id",
+  "/result/:_id",
   ctrlWrapper(ctrl.getResults)
 );
+
+router.get(
+  "/top",
+  ctrlWrapper(ctrl.getTopResults)
+);
+
 
 module.exports = router;

@@ -265,6 +265,73 @@
         }
       }
     },
+    "/api/users/reset/{type}": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Reset data",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "path",
+            "description": "user data to reset",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "description": "User email",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {}
+          },
+          "404": {
+            "description": "User not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/users/result/{_id}": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Get the results of the user",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResultsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/tests/qa/{type}": {
       "get": {
         "tags": ["Test"],
@@ -468,6 +535,47 @@
           "email": {
             "type": "string",
             "example": "user@example.com"
+          }
+        }
+      },
+      "UserResultsResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "description": "User's data",
+            "properties": {
+              "username": {
+                "type": "string",
+                "description": "User's name",
+                "example": "user"
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "example": "user@example.com"
+              },
+              "techResults": {
+                "type": "string",
+                "description": "User's tech results",
+                "example": "0.7"
+              },
+              "techCounter": {
+                "type": "string",
+                "description": "User's tech counter",
+                "example": "5"
+              },
+              "theoryResults": {
+                "type": "string",
+                "description": "User's theory results",
+                "example": "0.7"
+              },
+              "theoryCounter": {
+                "type": "string",
+                "description": "User's theory counter",
+                "example": "5"
+              }
+            }
           }
         }
       },

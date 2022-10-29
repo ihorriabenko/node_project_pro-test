@@ -8,6 +8,7 @@ const getVerify = require("./getVerify");
 const reVerify = require("./reVerify");
 const resetData = require("./resetData");
 const getResults = require("./getResults");
+const getTopResults = require("./getTopResults");
 
 module.exports = {
   register,
@@ -20,4 +21,5 @@ module.exports = {
   reVerify,
   resetData,
   getResults,
+  getTopResults,
 };
